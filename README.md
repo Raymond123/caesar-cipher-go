@@ -1,6 +1,7 @@
 # caesar-cipher-go
 
 1st assignment written in go.
+Easton Smith - 300189637
 
 part 1: 
 Created caesar cipher function that take a string and shift input and gives a casaer cipher of the string by shifting each character the 'shift' amount in the alphabet. If the shift goes past 'Z' then it loops back around to 'A' and continues adding the rest of 'shift' from there.
