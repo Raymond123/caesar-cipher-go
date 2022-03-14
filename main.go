@@ -15,15 +15,19 @@ func main() {
 	done := make(chan int)
 	item := make(chan string)
 
+	// PART 1 // PRINT IS IN FUNCTION
 	caesarCipher("I love CS!", 5)
-	// PART 2 HERE, COMMENTED OUT CAUSE USED THE SAME CHANNELS AS PART 3
+
+	// PART 2, COMMENTED OUT CAUSE USED THE SAME CHANNELS AS PART 3
 	//go caesarCipherList(messages[:], 2, item, done)
 	fmt.Println()
 
+	// PART 3
 	go caesarCipherList(messages[:3], 2, item, done)
 	go caesarCipherList(messages[3:6], 2, item, done)
 	go caesarCipherList(messages[6:], 2, item, done)
 
+	// CHANNEL SYNCING AND RESULT PRINTING
 	sync := 0
 	for {
 		msg, _ := <-item
@@ -34,10 +38,13 @@ func main() {
 		}
 		sync = sync + <-done
 	}
+
+	// CLOSE CHANNELS
 	close(done)
 	close(item)
 }
 
+// CIPHER FUNCTION FOR PART 1
 func caesarCipher(msg string, shift int) {
 	char := toRunes(msg)
 	var encode []rune
@@ -56,6 +63,7 @@ func caesarCipher(msg string, shift int) {
 	fmt.Println(strings.ToUpper(string(encode)))
 }
 
+// CIPHER FUNCTION FOR PARTS 2 & 3
 func caesarCipherList(msg []string, shift int, item chan string, done chan int) {
 	for _, m := range msg {
 		char := toRunes(m)
